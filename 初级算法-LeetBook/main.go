@@ -127,7 +127,7 @@ func singleNumber(nums []int) int {
 	if l == 0 {
 		return 0
 	}
-	if l <= 1 {
+	if l <= 2 {
 		return nums[0]
 	}
 	var res int
@@ -137,6 +137,12 @@ func singleNumber(nums []int) int {
 	return res
 }
 
+// 两个数组的交集 II
+func intersect(nums1 []int, nums2 []int) []int {
+
+	return nil
+}
+
 func main() {
-	fmt.Println(singleNumber([]int{4, 3, 3}))
+	fmt.Println(singleNumber([]int{4, 4}))
 }
