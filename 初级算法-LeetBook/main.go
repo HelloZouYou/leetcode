@@ -1,6 +1,11 @@
 // https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/x2gy9m/
 package main
 
+import (
+	"fmt"
+	"math"
+)
+
 // 删除排序数组中的重复项
 // 双指针
 func removeDuplicates(nums []int) int {
@@ -192,6 +197,71 @@ func twoSum(nums []int, target int) []int {
 	return []int{}
 }
 
+// 旋转图像
+func rotate2(matrix [][]int) {
+	l := len(matrix)
+	if l <= 1 {
+		return
+	}
+	// 先上下交换
+	for i := 0; i < l/2; i++ {
+		matrix[i], matrix[l-i-1] = matrix[l-i-1], matrix[i]
+	}
+	// 再对角线交换
+	for i := 1; i < l; i++ {
+		for k := 0; k < i; k++ {
+			matrix[i][k], matrix[k][i] = matrix[k][i], matrix[i][k]
+		}
+	}
+	fmt.Println(matrix)
+}
+
+// 反转字符串
+func reverseString(s []byte) {
+	l := len(s)
+	if l <= 1 {
+		return
+	}
+	k := l / 2
+	for i := 0; i < k; i++ {
+		s[i], s[l-i-1] = s[l-i-1], s[i]
+	}
+}
+
+// 整数反转
+func reverse(x int) int {
+	if x < 10 && x > -10 {
+		return x
+	}
+	res := 0
+	for x != 0 {
+		s := x % 10
+		m := res*10 + s
+		if m >= math.MaxInt32 || m <= math.MinInt32 {
+			return 0
+		}
+		x, res = x/10, m
+	}
+	return res
+}
+
+// 字符串中的第一个唯一字符
+func firstUniqChar(s string) int {
+	l := len(s)
+	if l == 1 {
+		return 0
+	}
+	// m, t := map[byte]int{}, 0
+	// for i := l - 1; i > 0; i-- {
+	// 	if v, ok := m[s[i]]; ok {
+	// 		delete(m, s[i])
+	// 		continue
+	// 	}
+	// 	m[s[i]] = 1
+	// }
+	// return m[t]
+}
+
 func main() {
-	moveZeroes([]int{0, 1, 0, 3, 12})
+	fmt.Println(firstUniqChar("abcdefg"))
 }
