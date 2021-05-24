@@ -247,19 +247,16 @@ func reverse(x int) int {
 
 // 字符串中的第一个唯一字符
 func firstUniqChar(s string) int {
-	l := len(s)
-	if l == 1 {
-		return 0
+	a := [26]int{}
+	for _, v := range s {
+		a[v-'a'] += 1
 	}
-	// m, t := map[byte]int{}, 0
-	// for i := l - 1; i > 0; i-- {
-	// 	if v, ok := m[s[i]]; ok {
-	// 		delete(m, s[i])
-	// 		continue
-	// 	}
-	// 	m[s[i]] = 1
-	// }
-	// return m[t]
+	for k, v := range s {
+		if n := a[v-'a']; n == 1 {
+			return k
+		}
+	}
+	return -1
 }
 
 func main() {
