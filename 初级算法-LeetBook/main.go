@@ -1,8 +1,6 @@
 // https://leetcode-cn.com/leetbook/read/top-interview-questions-easy/x2gy9m/
 package main
 
-import "fmt"
-
 // 删除排序数组中的重复项
 // 双指针
 func removeDuplicates(nums []int) int {
@@ -143,6 +141,57 @@ func intersect(nums1 []int, nums2 []int) []int {
 	return nil
 }
 
+// 加一
+func plusOne(digits []int) []int {
+	l := len(digits)
+	if l == 0 {
+		return []int{}
+	}
+	tmp := 1
+	for i := l - 1; tmp != 0 && i >= 0; i-- {
+		digits[i] += tmp
+		tmp = digits[i] / 10
+		digits[i] %= 10
+	}
+	if tmp != 0 {
+		res := make([]int, 0, l+1)
+		digits = append(append(res, tmp), digits...)
+	}
+	return digits
+}
+
+// 移动零
+func moveZeroes(nums []int) {
+	l := len(nums)
+	if l == 1 {
+		return
+	}
+	for k, i := 0, 0; i < l; i++ {
+		if nums[k] == 0 {
+			nums = append(nums[:k], nums[k+1:]...)
+			nums = append(nums, 0)
+			k--
+		}
+		k++
+	}
+}
+
+// 两数之和
+func twoSum(nums []int, target int) []int {
+	var (
+		tmp = map[int]int{}
+	)
+
+	for k, v := range nums {
+		if key, ok := tmp[v]; ok {
+			return []int{key, k}
+		} else {
+			tmp[target-v] = k
+		}
+	}
+	return []int{}
+}
+
 func main() {
-	fmt.Println(singleNumber([]int{4, 4}))
+	moveZeroes([]int{0, 1, 0, 3, 12})
 }
