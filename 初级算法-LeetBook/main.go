@@ -252,9 +252,8 @@ func twoSum(nums []int, target int) []int {
 	for k, v := range nums {
 		if key, ok := tmp[v]; ok {
 			return []int{key, k}
-		} else {
-			tmp[target-v] = k
 		}
+		tmp[target-v] = k
 	}
 	return []int{}
 }
@@ -311,7 +310,7 @@ func reverse(x int) int {
 func firstUniqChar(s string) int {
 	a := [26]int{}
 	for _, v := range s {
-		a[v-'a'] += 1
+		a[v-'a']++
 	}
 	for k, v := range s {
 		if n := a[v-'a']; n == 1 {
@@ -321,6 +320,75 @@ func firstUniqChar(s string) int {
 	return -1
 }
 
+// 有效的字母异位词
+func isAnagram(s string, t string) bool {
+	l1 := len(s)
+	l2 := len(t)
+	if l1 != l2 {
+		return false
+	}
+	a := map[rune]int{}
+	for _, v := range s {
+		a[v]++
+	}
+	for _, v := range t {
+		if g, ok := a[v]; !ok || g == 0 {
+			return false
+		}
+		a[v]--
+	}
+	return true
+}
+
+// 字符串转换整数 (atoi)
+func myAtoi(s string) int {
+
+}
+
+// 验证回文串
+func isPalindrome(s string) bool {
+	l := len(s)
+	if l < 2 {
+		return true
+	}
+	t, e := 0, l-1
+	r := []rune(s)
+	for t != e {
+		if r[t] >= 97 && r[t] <= 122 {
+			r[t] -= 32
+		}
+		if r[e] >= 97 && r[e] <= 122 {
+			r[e] -= 32
+		}
+		if (r[t] < 48 || r[t] > 57) && (r[t] < 65 || r[t] > 90) {
+			t++
+			continue
+		}
+		if (r[e] < 48 || r[e] > 57) && (r[e] < 65 || r[e] > 90) {
+			e--
+			continue
+		}
+		if r[t] != r[e] {
+			return false
+		}
+		if e-t == 1 {
+			break
+		}
+		t++
+		e--
+	}
+	return true
+}
+
 func main() {
-	fmt.Println(firstUniqChar("abcdefg"))
+	s := "Уважаемый"
+	a := []rune(s)
+	l := len(s)
+	for _, v := range a {
+		fmt.Println(string(v))
+	}
+	for i := 0; i < l; i++ {
+		fmt.Println(string(a[i]))
+	}
+	// fmt.Println(isPalindrome("race a car"))
 }
