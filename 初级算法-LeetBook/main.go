@@ -9,28 +9,36 @@ import (
 // 删除排序数组中的重复项
 // 双指针
 func removeDuplicates(nums []int) int {
+	// 先处理边界
 	l := len(nums)
 	if l == 0 {
 		return 0
 	}
-	k := 0
-	for i := 1; i < l; i++ {
-		if nums[i] != nums[k] {
-			k++
-			nums[k] = nums[i]
+	left := 0
+
+	// 双指针
+	// 左指针永远指向已经确定的最后一个不重复项，并原地等待
+	// 右指针不停去找下一个不重复项，找到后送到左指针面前，并让左指针右移继续等待
+	for right := 1; right < l; right++ {
+		if nums[right] != nums[left] {
+			left++
+			nums[left] = nums[right]
 		}
 	}
-	return k + 1
+	return left + 1
 }
 
 // 买卖股票的最佳时机 II
 // 贪心算法
 func maxProfit(prices []int) int {
+	// 处理边界，不足两天的没得赚
 	l := len(prices)
 	if l < 2 {
 		return 0
 	}
 	want := 0
+	// 最大利润即是每个上涨的日子都完成交易，每个下跌的日子都能避开
+	// 因此只要某天价格比前天大，就加到利润want中
 	for i := 1; i < l; i++ {
 		if prices[i] > prices[i-1] {
 			want += prices[i] - prices[i-1]
@@ -377,18 +385,59 @@ func isPalindrome(s string) bool {
 
 // 字符串转换整数 (atoi)
 func myAtoi(s string) int {
+	res := 0
+	prefix := false
+	symbol := true
+	for _, v := range s {
+		g := int(v) - 48
+		if !prefix {
+			if v == ' ' {
+				continue
+			}
+			if v == '-' {
+				symbol = false
+			} else if v == '+' {
+			} else if v >= 48 && v <= 57 {
+				res = res*10 + g
+			} else {
+				return 0
+			}
+			prefix = true
+		} else {
+			if v >= 48 && v <= 57 {
+				res = res*10 + g
+			} else {
+				break
+			}
+		}
+		if res > math.MaxInt32 {
+			res = math.MaxInt32 + 1
+			break
+		}
+	}
+	if !symbol {
+		res = -res
+	}
+
+	if res < math.MinInt32 {
+		res = math.MinInt32
+	} else if res > math.MaxInt32 {
+		res = math.MaxInt32
+	}
+	return res
+}
+
+// 实现 strStr()
+func strStr(haystack string, needle string) int {
 
 }
 
 func main() {
-	s := "Уважаемый"
-	a := []rune(s)
-	l := len(s)
-	for _, v := range a {
-		fmt.Println(string(v))
-	}
-	for i := 0; i < l; i++ {
-		fmt.Println(string(a[i]))
+	for _, v := range []string{
+		"-91283472332",
+		"9223372036854775808",
+	} {
+		fmt.Println(myAtoi(v))
 	}
 	// fmt.Println(isPalindrome("race a car"))
 }
