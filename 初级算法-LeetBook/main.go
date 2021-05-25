@@ -340,11 +340,6 @@ func isAnagram(s string, t string) bool {
 	return true
 }
 
-// 字符串转换整数 (atoi)
-func myAtoi(s string) int {
-
-}
-
 // 验证回文串
 func isPalindrome(s string) bool {
 	l := len(s)
@@ -378,6 +373,11 @@ func isPalindrome(s string) bool {
 		e--
 	}
 	return true
+}
+
+// 字符串转换整数 (atoi)
+func myAtoi(s string) int {
+
 }
 
 func main() {
