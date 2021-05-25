@@ -142,8 +142,70 @@ func singleNumber(nums []int) int {
 
 // 两个数组的交集 II
 func intersect(nums1 []int, nums2 []int) []int {
+	l1 := len(nums1)
+	l2 := len(nums2)
+	if l1 == 0 || l2 == 0 {
+		return []int{}
+	}
 
-	return nil
+	tmp := make(map[int]int)
+	for _, item := range nums1 {
+		tmp[item]++
+	}
+	for i := 0; i < l2; i++ {
+		if v, ok := tmp[nums2[i]]; ok && v > 0 {
+			tmp[nums2[i]]--
+		} else {
+			nums2 = append(nums2[:i], nums2[i+1:]...)
+			l2--
+			i--
+		}
+	}
+	return nums2
+}
+
+// 有效的数独
+func isValidSudoku(board [][]byte) bool {
+	for _, v := range board {
+		for _, k := range v {
+			fmt.Print(string(k))
+		}
+		fmt.Println("")
+	}
+	l := len(board)
+	if l != 9 {
+		return false
+	}
+	h := map[int]map[byte]struct{}{}
+	s := map[int]map[byte]struct{}{}
+	q := map[int]map[byte]struct{}{}
+	for i := 0; i < l; i++ {
+		h[i] = make(map[byte]struct{})
+		s[i] = make(map[byte]struct{})
+		q[i] = make(map[byte]struct{})
+	}
+	for i, g := range board {
+		for k, v := range g {
+			if _, ok := h[i][v]; v != '.' && ok {
+				return false
+			}
+			h[i][v] = struct{}{}
+			if _, ok := s[k][v]; v != '.' && ok {
+				return false
+			}
+			s[k][v] = struct{}{}
+			if _, ok := q[(i/3)*3+k/3][v]; v != '.' && ok {
+				return false
+			}
+			q[(i/3)*3+k/3][v] = struct{}{}
+		}
+	}
+	return true
+}
+
+// 旋转图像
+func rotate1(matrix [][]int) {
+
 }
 
 // 加一
