@@ -105,6 +105,7 @@ func isPalindrome(head *ListNode) bool {
 
 // 环形链表
 func hasCycle(head *ListNode) bool {
+	// 快慢指针，最终相遇则有环
 	// if head == nil || head.Next == nil {
 	// 	return false
 	// }
@@ -112,12 +113,13 @@ func hasCycle(head *ListNode) bool {
 	// for fast != nil && fast.Next != nil {
 	// 	fast = fast.Next.Next
 	// 	slow = slow.Next
-	// 	if fast == slow {
+	// 	if fast == slow { // 要比较节点本身
 	// 		return true
 	// 	}
 	// }
 	// return false
 
+	// 先将节点的Next指向自己同时head指针后移，如果节点Next已经指向自己，则说明有环
 	if head == nil || head.Next == nil {
 		return false
 	}

@@ -11,12 +11,15 @@ type TreeNode struct {
 
 // 二叉树的最大深度
 func maxDepth(root *TreeNode) int {
+	// 深度优先搜索，nil节点返回0
 	if root == nil {
 		return 0
 	}
+	// 递归搜索当前节点的左右子节点，当前节点深度记1，将子节点的结果加起来
 	res := 1
 	l := maxDepth(root.Left)
 	r := maxDepth(root.Right)
+	// 只取最大值
 	if r > l {
 		res += r
 	} else {
