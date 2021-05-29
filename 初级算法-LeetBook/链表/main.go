@@ -57,19 +57,89 @@ func reverseList(head *ListNode) *ListNode {
 	return reverse
 }
 
+// 合并两个有序链表
+func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
+	// 某一个链表到尾了则终止递归
+	if l1 == nil {
+		return l2
+	}
+	if l2 == nil {
+		return l1
+	}
+
+	// 车轮战，轮番比试
+	// 谁当前值小，就留下，然后递归比较其Next
+	if l1.Val < l2.Val {
+		l1.Next = mergeTwoLists(l1.Next, l2)
+		return l1
+	} else {
+		l2.Next = mergeTwoLists(l1, l2.Next)
+		return l2
+	}
+}
+
+// 回文链表
+func isPalindrome(head *ListNode) bool {
+	fast := head
+	var reverse *ListNode
+	// 先通过快慢指针将当前head移到中间位置，并同时直接将前半部分翻转
+	for fast != nil && fast.Next != nil {
+		fast = fast.Next.Next
+		head.Next, reverse, head = reverse, head, head.Next
+	}
+	// fast不为nil说明奇数个，此时head恰在中间，需要再进一位
+	if fast != nil {
+		head = head.Next
+	}
+	// 此时head和reverse就分别是后半部分和前半部分了
+	for head != nil {
+		// 直接比较值是否一致
+		if head.Val != reverse.Val {
+			return false
+		}
+		head = head.Next
+		reverse = reverse.Next
+	}
+	return true
+}
+
+// 环形链表
+func hasCycle(head *ListNode) bool {
+	// if head == nil || head.Next == nil {
+	// 	return false
+	// }
+	// fast, slow := head, head
+	// for fast != nil && fast.Next != nil {
+	// 	fast = fast.Next.Next
+	// 	slow = slow.Next
+	// 	if fast == slow {
+	// 		return true
+	// 	}
+	// }
+	// return false
+
+	if head == nil || head.Next == nil {
+		return false
+	}
+	for head != nil && head.Next != nil {
+		head.Next, head = head, head.Next
+		if head.Next == head {
+			return true
+		}
+	}
+	return false
+}
+
 func main() {
-	fmt.Println(reverseList(&ListNode{
+	fmt.Println(isPalindrome(&ListNode{
 		Val: 1,
 		Next: &ListNode{
 			Val: 2,
 			Next: &ListNode{
-				Val: 3,
+				Val: 2,
 				Next: &ListNode{
-					Val: 4,
-					Next: &ListNode{
-						Val:  5,
-						Next: nil,
-					},
+					Val:  1,
+					Next: nil,
 				},
 			},
 		},
