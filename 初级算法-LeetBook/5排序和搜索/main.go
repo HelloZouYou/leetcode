@@ -31,7 +31,7 @@ func firstBadVersion(n int) int {
 		if isBadVersion(mid) {
 			max = mid
 		} else {
-			min = mid
+			min = mid + 1
 		}
 	}
 	// 最后不确定的只有min，max一定是错的
